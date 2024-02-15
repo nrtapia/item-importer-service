@@ -1,0 +1,21 @@
+app:
+  client:
+    meli:
+      url: https://api.mercadolibre.com # endpoint for accessing APIs
+      connectionTimeout: 4  # timeout for connection in seconds
+      readTimeout: 4 # timeout for read in seconds
+  importer:
+    clientWaitTimeout: 5 # timeout for waiting for combined call to APIs in seconds
+
+server:
+  error:
+    include-message: ALWAYS
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/inventory
+    username: inventoryuser
+    password: S3cret
+  jpa:
+    hibernate:
+      ddl-auto: update

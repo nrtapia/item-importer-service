@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  fileProcessor:
+    image: ntapia/item-importer-service
+    ports:
+      - 8181:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory
+     # - JAVA_TOOL_OPTIONS=-Djavax.net.ssl.trustStore=./app/trustStore.jks -Djavax.net.ssl.trustStorePassword=meliPsw123  # Enable SSL certificate
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pg-data/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=inventoryuser
+      - POSTGRES_DB=inventory
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    ports:
+      - 8888:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: username@domainname.com
+      PGADMIN_DEFAULT_PASSWORD: S3cret2
+    volumes:
+      - ./pg-data/pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
